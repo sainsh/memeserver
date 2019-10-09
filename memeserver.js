@@ -1,6 +1,6 @@
 const http = require('http');
 const memes = require('./memeModule');
-const fs = require('fs');
+
 const url = require('url');
 
 
@@ -20,7 +20,9 @@ http.createServer(function (req, res) {
         var files = memes.memes();
         files = files.split("\n")
 
-        fs.readFile('./index.html', (err, html) => {
+        var html = "<html>\n<body>\n<div>\n"
+
+
 
             for (let i = 0; i < files.length - 1; i++) {
                 html += "<a href='.?search=" + files[i] + "'>" + files[i] + "</a><br>\n";
@@ -29,7 +31,7 @@ http.createServer(function (req, res) {
 
 
             res.end(html);
-        });
+        
     }
 
 
