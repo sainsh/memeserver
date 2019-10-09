@@ -1,5 +1,6 @@
 const http = require('http');
 const memes = require('./memeModule');
+const fs = require('fs');
 
 const url = require('url');
 
@@ -7,15 +8,24 @@ const url = require('url');
 http.createServer(function (req, res) {
 
     var q = url.parse(req.url, true);
+    var qData = q.query;
 
     if (q.search != null) {
-        var qData = q.query;
+        
         res.writeHead(200, {'Content-Type' : 'image/gif'})
         fs.readFile('./memes/' +qData.search, (err, img)=>{
             res.end(img);
         })
 
-    } else {
+    } else if(q.pathname != null) {
+        res.writeHead(200, {'Content-Type': 'image/gif'});
+        fs.readFile('.'+qData.pathname, (err, img)=>{
+            res.end(img);
+        })
+
+
+    }
+    else{
         res.writeHead(200, { 'Content-Type': 'text/html' });
         var files = memes.memes();
         files = files.split("\n")
