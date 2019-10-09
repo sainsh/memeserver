@@ -19,7 +19,7 @@ http.createServer(function (req, res) {
 
     } else if(q.pathname != null) {
         res.writeHead(200, {'Content-Type': 'image/gif'});
-        fs.readFile('.'+qData.pathname, (err, img)=>{
+        fs.readFile('.'+q.pathname, (err, img)=>{
             res.end(img);
         })
 
